@@ -50,12 +50,12 @@ uaac member add cloud_controller.admin $AUDIT_USER
 ## Org and Space for Service
 Since this is a system related app, it should be pushed into the system org. As a user with system administrator privileges, create an auditor space. This will be the location to which the application will be “pushed” later in this document.
 
-## Usage Service (the app)
-The Usage Service application was written by the Pivotal Cloud Foundry Services team specifically for customers. It is written in golang making it fast and easy to update.
+## Audit Usage Service (the app)
+The Audit Usage Service application was written by the Pivotal Cloud Foundry Services team specifically for customers. It is written in golang making it fast and easy to update.
 
-This service returns the application usage information for all applications, in all spaces of all orgs with the foundation for a specific month to date. For example, calling the service on August 23, 2017 with the value URL `http://cf-orgs-usage.<app-domain>/app-usage/2017/08`, which is August 2017, will provide all app information for August 1st through August 23rd at the time it was called. Apps Manager updates monthly information roughly each hour of the day.
+This service returns the application usage information for all apps, in all spaces of all orgs with the foundation for a specific month to date. For example, calling the service on August 23, 2017 with the value URL `http://cf-orgs-usage.<app-domain>/app-usage/2017/08`, which is August 2017, will provide all app information for August 1st through August 23rd at the time it was called. Apps Manager updates monthly information roughly each hour of the day.
 
-Usage performs roughly the following function, adding to the normal output of the Apps Manager app_usage endpoint.
+Audit usage performs roughly the following function, adding to the normal output of the Apps Manager app_usage endpoint.
 
 1. At startup, the app logs into PCF foundation as the Auditor user
 2. When called, the app checks basic authentication of the caller
