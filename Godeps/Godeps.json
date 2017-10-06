@@ -1,0 +1,121 @@
+{
+	"ImportPath": "github.com/cbusch-pivotal/cf-orgs-usage",
+	"GoVersion": "go1.9",
+	"GodepVersion": "v79",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/cloudfoundry-community/go-cfclient",
+			"Rev": "983f0bf32d53fef86f65c095ecb693acf8a8d95e"
+		},
+		{
+			"ImportPath": "github.com/dgrijalva/jwt-go",
+			"Comment": "v3.0.0-20-ga539ee1",
+			"Rev": "a539ee1a749a2b895533f979515ac7e6e0f5b650"
+		},
+		{
+			"ImportPath": "github.com/labstack/echo",
+			"Comment": "3.2.3-3-g1678da5",
+			"Rev": "1678da53d65d33464d578ace3d2854b30dfd8e4f"
+		},
+		{
+			"ImportPath": "github.com/labstack/echo/middleware",
+			"Comment": "3.2.3-3-g1678da5",
+			"Rev": "1678da53d65d33464d578ace3d2854b30dfd8e4f"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/bytes",
+			"Comment": "0.2.2",
+			"Rev": "779b8a8b9850a97acba6a3fe20feb628c39e17c1"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/color",
+			"Comment": "0.2.2",
+			"Rev": "779b8a8b9850a97acba6a3fe20feb628c39e17c1"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/log",
+			"Comment": "0.2.2",
+			"Rev": "779b8a8b9850a97acba6a3fe20feb628c39e17c1"
+		},
+		{
+			"ImportPath": "github.com/labstack/gommon/random",
+			"Comment": "0.2.2",
+			"Rev": "779b8a8b9850a97acba6a3fe20feb628c39e17c1"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-colorable",
+			"Comment": "v0.0.9-6-gad5389d",
+			"Rev": "ad5389df28cdac544c99bd7b9161a0b5b6ca9d1b"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-isatty",
+			"Comment": "v0.0.2",
+			"Rev": "fc9e8d8ef48496124e79ae0df75490096eccf6fe"
+		},
+		{
+			"ImportPath": "github.com/moul/http2curl",
+			"Rev": "4e24498b31dba4683efb9d35c1c8a91e2eda28c8"
+		},
+		{
+			"ImportPath": "github.com/palantir/stacktrace",
+			"Rev": "78658fd2d1772b755720ed8c44367d11ee5380d6"
+		},
+		{
+			"ImportPath": "github.com/palantir/stacktrace/cleanpath",
+			"Rev": "78658fd2d1772b755720ed8c44367d11ee5380d6"
+		},
+		{
+			"ImportPath": "github.com/parnurzeal/gorequest",
+			"Comment": "v0.2.15-7-g5bf13be",
+			"Rev": "5bf13be198787abbed057fb7c4007f372083a0f5"
+		},
+		{
+			"ImportPath": "github.com/pkg/errors",
+			"Comment": "v0.8.0-5-gc605e28",
+			"Rev": "c605e284fe17294bda444b34710735b29d1a9d90"
+		},
+		{
+			"ImportPath": "github.com/valyala/bytebufferpool",
+			"Rev": "e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7"
+		},
+		{
+			"ImportPath": "github.com/valyala/fasttemplate",
+			"Rev": "dcecefd839c4193db0d35b88ec65b4c12d360ab0"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/acme",
+			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/acme/autocert",
+			"Rev": "81e90905daefcd6fd217b62423c0908922eadb30"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "6c23252515492caf9b228a9d5cabcdbde29f7f82"
+		},
+		{
+			"ImportPath": "golang.org/x/net/publicsuffix",
+			"Rev": "6c23252515492caf9b228a9d5cabcdbde29f7f82"
+		},
+		{
+			"ImportPath": "golang.org/x/oauth2",
+			"Rev": "7fdf09982454086d5570c7db3e11f360194830ca"
+		},
+		{
+			"ImportPath": "golang.org/x/oauth2/clientcredentials",
+			"Rev": "7fdf09982454086d5570c7db3e11f360194830ca"
+		},
+		{
+			"ImportPath": "golang.org/x/oauth2/internal",
+			"Rev": "7fdf09982454086d5570c7db3e11f360194830ca"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "ebfc5b4631820b793c9010c87fd8fef0f39eb082"
+		}
+	]
+}
