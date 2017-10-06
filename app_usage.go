@@ -70,12 +70,12 @@ func AppUsageReport(c echo.Context) error {
 	usageReport, err := GetAppUsageReport(cfClient, year, month)
 
 	if err != nil {
-		return stacktrace.Propagate(err, "Couldn't get usage report")
+		return stacktrace.Propagate(err, "Couldn't get app usage report")
 	}
 
-	flat_report, err := GetFlattenedOutput(usageReport)
+	flat_report, err := GetFlattenedAppOutput(usageReport)
 	if err != nil {
-		return stacktrace.Propagate(err, "Couldn't get usage report")
+		return stacktrace.Propagate(err, "Couldn't get app usage report")
 	}
 
 	return c.JSON(http.StatusOK, flat_report)
@@ -130,8 +130,8 @@ func GetAppUsageForOrg(token string, org cfclient.Org, year int, month int) (*Or
 	return target, nil
 }
 
-//GetFlattenedOutput convert formatting to flattened output
-func GetFlattenedOutput(usageReport *AppUsage) (FlattenAppUsage, error) {
+//GetFlattenedAppOutput convert formatting to flattened output
+func GetFlattenedAppOutput(usageReport *AppUsage) (FlattenAppUsage, error) {
 
 	var flatUsage FlattenAppUsage
 
