@@ -1,0 +1,443 @@
+{
+  "orgs": [
+    {
+      "organization_guid": "9b848880-292a-4318-bceb-a70056dec2ff",
+      "organization_name": "system",
+      "period_start": "2017-09-01T00:00:00Z",
+      "period_end": "2017-09-30T23:59:59Z",
+      "app_usages": [
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "app-usage-server-venerable",
+          "app_guid": "0536ab0f-6e40-4a97-8df4-8938049c6470",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 128,
+          "duration_in_seconds": 420791
+        },
+        {
+          "space_guid": "8f42ec49-7a33-4c35-ae82-f6e704c74f8a",
+          "space_name": "autoscaling",
+          "app_name": "autoscale",
+          "app_guid": "0707bbc5-11bc-46f3-8c61-7758bccad8b7",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 421059
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "app-usage-scheduler-venerable",
+          "app_guid": "106aca63-b44d-483b-8f3a-ff1d875605ac",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 128,
+          "duration_in_seconds": 420771
+        },
+        {
+          "space_guid": "17e79e31-e87e-4a10-ba5e-e2a9af135c92",
+          "space_name": "CF_SMOKE_TEST_SPACE",
+          "app_name": "SMOKES-1-APP-ff4e8164-8e72-4598-4f73-41ac33243fab",
+          "app_guid": "13aaa35a-d8ae-4227-bd8f-08f73dbf3b72",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 26
+        },
+        {
+          "space_guid": "17e79e31-e87e-4a10-ba5e-e2a9af135c92",
+          "space_name": "CF_SMOKE_TEST_SPACE",
+          "app_name": "SMOKES-1-APP-ff4e8164-8e72-4598-4f73-41ac33243fab",
+          "app_guid": "13aaa35a-d8ae-4227-bd8f-08f73dbf3b72",
+          "instance_count": 2,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 13
+        },
+        {
+          "space_guid": "8f42ec49-7a33-4c35-ae82-f6e704c74f8a",
+          "space_name": "autoscaling",
+          "app_name": "autoscale-new",
+          "app_guid": "15672947-e7f3-47ce-b4f3-387600c05f49",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 442960
+        },
+        {
+          "space_guid": "b09ed379-7453-475e-a572-51940e725464",
+          "space_name": "CF_SMOKE_TEST_SPACE",
+          "app_name": "SMOKES-1-APP-db55efc5-297a-409e-52a1-8bd8d0c930cb",
+          "app_guid": "2450d520-4010-49e3-8e54-9a25383ed044",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 33
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "p-invitations-venerable",
+          "app_guid": "2cdec987-07b0-4b33-88f8-834ccb35ea4e",
+          "instance_count": 2,
+          "memory_in_mb_per_instance": 256,
+          "duration_in_seconds": 12653
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "app-usage-scheduler-venerable",
+          "app_guid": "311a588e-4b5a-4461-8901-dbf3f948aa00",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 128,
+          "duration_in_seconds": 12742
+        },
+        {
+          "space_guid": "ea126cc6-3bca-4884-8cdc-fd92e01caed3",
+          "space_name": "SMOKE_TESTS-1-SPACE-7fc01ab0-6292-4622-7",
+          "app_name": "asg-test-app",
+          "app_guid": "33745f33-a7fa-447f-a627-4215f2eb0594",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 18
+        },
+        {
+          "space_guid": "ca6282d8-003b-44a4-9e4d-fc205f85b79a",
+          "space_name": "notifications-with-ui",
+          "app_name": "notifications",
+          "app_guid": "38a4ce83-2c00-439f-8fef-32cba9cccc02",
+          "instance_count": 3,
+          "memory_in_mb_per_instance": 64,
+          "duration_in_seconds": 864000
+        },
+        {
+          "space_guid": "b2f6e779-a21b-4228-bedd-84d29950be15",
+          "space_name": "CF_SMOKE_TEST_SPACE",
+          "app_name": "SMOKES-1-APP-3128c543-04d4-4aa4-4697-107010398223",
+          "app_guid": "3a714785-96f2-4c5a-8499-088b4023effd",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 38
+        },
+        {
+          "space_guid": "8e76dd68-e844-4ac5-b074-ec40523d7ce2",
+          "space_name": "nfs",
+          "app_name": "nfsbroker",
+          "app_guid": "4f62e104-3ba1-4a93-95bc-e6c6ee601653",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 864000
+        },
+        {
+          "space_guid": "6f433a2c-e7a3-470c-b4d2-b6a5225cf311",
+          "space_name": "CF_SMOKE_TEST_SPACE",
+          "app_name": "SMOKES-1-APP-0fa026c3-3f65-4111-6634-b068a6e13013",
+          "app_guid": "6004c1e2-1ffb-4921-91d9-402c53c99df4",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 32
+        },
+        {
+          "space_guid": "6f433a2c-e7a3-470c-b4d2-b6a5225cf311",
+          "space_name": "CF_SMOKE_TEST_SPACE",
+          "app_name": "SMOKES-1-APP-0fa026c3-3f65-4111-6634-b068a6e13013",
+          "app_guid": "6004c1e2-1ffb-4921-91d9-402c53c99df4",
+          "instance_count": 2,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 12
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "app-usage-worker",
+          "app_guid": "7a1c674e-93a5-4271-92cd-668a0bf0e65a",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 430813
+        },
+        {
+          "space_guid": "84ed0532-50d6-4092-b9f1-acc3af42ce96",
+          "space_name": "SMOKE_TESTS-1-SPACE-d54e4cde-6bdb-4f46-4",
+          "app_name": "asg-test-app",
+          "app_guid": "8073de4a-6cee-4c39-8977-360236e5b6d2",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 18
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "p-invitations-venerable",
+          "app_guid": "821be635-f61c-45c3-8b30-d97916df28bd",
+          "instance_count": 2,
+          "memory_in_mb_per_instance": 256,
+          "duration_in_seconds": 420683
+        },
+        {
+          "space_guid": "09380fab-cbe7-4c99-b3ca-4649db7bd782",
+          "space_name": "SMOKE_TESTS-1-SPACE-9d0160f7-d977-4a8c-4",
+          "app_name": "asg-test-app",
+          "app_guid": "889e0603-2920-4097-b63f-e7c1c2b0df96",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 17
+        },
+        {
+          "space_guid": "4eb94eaf-6293-4aed-9c07-af32f3edfce2",
+          "space_name": "scheduler",
+          "app_name": "scheduler-broker",
+          "app_guid": "979a3292-a77d-4a45-92ba-4d4b245bf2b9",
+          "instance_count": 3,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 864000
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "app-usage-scheduler",
+          "app_guid": "99390b2b-e612-4a3d-8e5d-163c77d0fc6b",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 128,
+          "duration_in_seconds": 430804
+        },
+        {
+          "space_guid": "010aa19c-2822-497b-8e4c-1b31fb3f166d",
+          "space_name": "CF_SMOKE_TEST_SPACE",
+          "app_name": "SMOKES-1-APP-1189d902-4f93-4067-552a-9e089375d766",
+          "app_guid": "9c8b45a7-935d-480a-935a-aa7eeb8a5bad",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 72
+        },
+        {
+          "space_guid": "010aa19c-2822-497b-8e4c-1b31fb3f166d",
+          "space_name": "CF_SMOKE_TEST_SPACE",
+          "app_name": "SMOKES-1-APP-1189d902-4f93-4067-552a-9e089375d766",
+          "app_guid": "9c8b45a7-935d-480a-935a-aa7eeb8a5bad",
+          "instance_count": 2,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 17
+        },
+        {
+          "space_guid": "4eb94eaf-6293-4aed-9c07-af32f3edfce2",
+          "space_name": "scheduler",
+          "app_name": "scheduler-taskrunner",
+          "app_guid": "adb1c99c-2e18-48d6-970b-e37e5e74dc79",
+          "instance_count": 3,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 864000
+        },
+        {
+          "space_guid": "79504171-706b-4876-bd4e-c1e37d5203d6",
+          "space_name": "SMOKE_TESTS-1-SPACE-1a144c8a-1972-4abd-6",
+          "app_name": "asg-test-app",
+          "app_guid": "ce94e376-0b5c-4ee5-899e-46ef3b79d400",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 18
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "apps-manager-js-venerable",
+          "app_guid": "cf976708-3ecb-4a77-83e0-596e28f4f941",
+          "instance_count": 6,
+          "memory_in_mb_per_instance": 128,
+          "duration_in_seconds": 420673
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "apps-manager-js",
+          "app_guid": "d008260b-43a6-4b0d-914a-b638e07ae820",
+          "instance_count": 6,
+          "memory_in_mb_per_instance": 128,
+          "duration_in_seconds": 430785
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "app-usage-server-venerable",
+          "app_guid": "d03a240b-24ef-4390-b869-4fda2d67fb68",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 128,
+          "duration_in_seconds": 12642
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "app-usage-server",
+          "app_guid": "d03a240b-24ef-4390-b869-4fda2d67fb68",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 512,
+          "duration_in_seconds": 171
+        },
+        {
+          "space_guid": "483bd7a7-3abe-447a-9b51-eadf47ef9493",
+          "space_name": "SMOKE_TESTS-1-SPACE-174a3fda-e9d9-40d9-6",
+          "app_name": "asg-test-app",
+          "app_guid": "d231bed1-9ccb-4c8f-9803-43c3110999ab",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 12
+        },
+        {
+          "space_guid": "c950c2e5-f5a7-4368-9737-89db44053bd8",
+          "space_name": "CF_SMOKE_TEST_SPACE",
+          "app_name": "SMOKES-1-APP-f3f371b9-196d-4804-6286-d745cc169caa",
+          "app_guid": "d94a374c-028c-41cc-9002-bc7aa625a1cc",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 39
+        },
+        {
+          "space_guid": "92533b94-8a0e-43b5-9797-d2fedb4ead7e",
+          "space_name": "pivotal-account-space",
+          "app_name": "pivotal-account-green",
+          "app_guid": "dcd9cb11-8b41-491f-bb1d-d4509df6e788",
+          "instance_count": 2,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 864000
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "p-invitations",
+          "app_guid": "dd72aded-2cde-4ed2-a3f8-c0738c02bed1",
+          "instance_count": 2,
+          "memory_in_mb_per_instance": 256,
+          "duration_in_seconds": 430799
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "app-usage-worker-venerable",
+          "app_guid": "e6ada92c-4dab-41f1-bd30-af055e93dab9",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 420751
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "app-usage-server",
+          "app_guid": "e8f4042c-3c56-4616-93cd-2505b7fa9d70",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 128,
+          "duration_in_seconds": 430622
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "app-usage-server",
+          "app_guid": "e8f4042c-3c56-4616-93cd-2505b7fa9d70",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 512,
+          "duration_in_seconds": 181
+        },
+        {
+          "space_guid": "ca6282d8-003b-44a4-9e4d-fc205f85b79a",
+          "space_name": "notifications-with-ui",
+          "app_name": "notifications-ui",
+          "app_guid": "ee3c877a-816d-4f5d-8dd5-08070c06647e",
+          "instance_count": 2,
+          "memory_in_mb_per_instance": 64,
+          "duration_in_seconds": 864000
+        },
+        {
+          "space_guid": "4eb94eaf-6293-4aed-9c07-af32f3edfce2",
+          "space_name": "scheduler",
+          "app_name": "scheduler-api",
+          "app_guid": "f6007cc2-d195-42ee-a378-6cf85afcd95b",
+          "instance_count": 3,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 864000
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "apps-manager-js-venerable",
+          "app_guid": "f9d89216-3f2e-447f-9526-f195048ac86f",
+          "instance_count": 6,
+          "memory_in_mb_per_instance": 128,
+          "duration_in_seconds": 12638
+        },
+        {
+          "space_guid": "6be09c2a-68b1-456f-a6ee-5621f4e3ac0e",
+          "space_name": "system",
+          "app_name": "app-usage-worker-venerable",
+          "app_guid": "fbba619c-2931-4695-8cb1-f15ca4f34431",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 12740
+        }
+      ]
+    },
+    {
+      "organization_guid": "901a4789-b3ec-479a-b225-36473f3c4e60",
+      "organization_name": "busch",
+      "period_start": "2017-09-01T00:00:00Z",
+      "period_end": "2017-09-30T23:59:59Z",
+      "app_usages": [
+        {
+          "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+          "space_name": "dev",
+          "app_name": "attendees",
+          "app_guid": "0c6576a3-e1e7-4822-b8f0-8a82a3cc9e2f",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 861585
+        },
+        {
+          "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+          "space_name": "dev",
+          "app_name": "attendees",
+          "app_guid": "0c6576a3-e1e7-4822-b8f0-8a82a3cc9e2f",
+          "instance_count": 2,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 1295
+        },
+        {
+          "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+          "space_name": "dev",
+          "app_name": "attendees",
+          "app_guid": "0c6576a3-e1e7-4822-b8f0-8a82a3cc9e2f",
+          "instance_count": 3,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 1120
+        },
+        {
+          "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+          "space_name": "dev",
+          "app_name": "apptio-usage-service",
+          "app_guid": "631ed4b2-afe2-409a-a81e-e26d86bc6f2b",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 187364
+        },
+        {
+          "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+          "space_name": "dev",
+          "app_name": "gotest-app",
+          "app_guid": "8b2faff9-5357-4eb1-9db9-b7184b758951",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 17
+        },
+        {
+          "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+          "space_name": "dev",
+          "app_name": "hello",
+          "app_guid": "b80afd34-c524-453d-994f-c07408989600",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 3
+        },
+        {
+          "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+          "space_name": "dev",
+          "app_name": "cf-usage-report",
+          "app_guid": "caf7f1e7-d797-46d4-a19a-d1b794e4e309",
+          "instance_count": 1,
+          "memory_in_mb_per_instance": 1024,
+          "duration_in_seconds": 172214
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "organization_guid": "901a4789-b3ec-479a-b225-36473f3c4e60",
+  "period_start": "2017-09-01T00:00:00Z",
+  "period_end": "2017-09-10T23:59:59Z",
+  "app_usages": [
+    {
+      "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+      "space_name": "dev",
+      "app_name": "attendees",
+      "app_guid": "0c6576a3-e1e7-4822-b8f0-8a82a3cc9e2f",
+      "instance_count": 1,
+      "memory_in_mb_per_instance": 1024,
+      "duration_in_seconds": 861585
+    },
+    {
+      "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+      "space_name": "dev",
+      "app_name": "attendees",
+      "app_guid": "0c6576a3-e1e7-4822-b8f0-8a82a3cc9e2f",
+      "instance_count": 2,
+      "memory_in_mb_per_instance": 1024,
+      "duration_in_seconds": 1295
+    },
+    {
+      "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+      "space_name": "dev",
+      "app_name": "attendees",
+      "app_guid": "0c6576a3-e1e7-4822-b8f0-8a82a3cc9e2f",
+      "instance_count": 3,
+      "memory_in_mb_per_instance": 1024,
+      "duration_in_seconds": 1120
+    },
+    {
+      "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+      "space_name": "dev",
+      "app_name": "apptio-usage-service",
+      "app_guid": "631ed4b2-afe2-409a-a81e-e26d86bc6f2b",
+      "instance_count": 1,
+      "memory_in_mb_per_instance": 1024,
+      "duration_in_seconds": 187364
+    },
+    {
+      "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+      "space_name": "dev",
+      "app_name": "gotest-app",
+      "app_guid": "8b2faff9-5357-4eb1-9db9-b7184b758951",
+      "instance_count": 1,
+      "memory_in_mb_per_instance": 1024,
+      "duration_in_seconds": 17
+    },
+    {
+      "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+      "space_name": "dev",
+      "app_name": "hello",
+      "app_guid": "b80afd34-c524-453d-994f-c07408989600",
+      "instance_count": 1,
+      "memory_in_mb_per_instance": 1024,
+      "duration_in_seconds": 3
+    },
+    {
+      "space_guid": "b0ffbbca-d9e8-4533-9158-8b6c327f486b",
+      "space_name": "dev",
+      "app_name": "cf-usage-report",
+      "app_guid": "caf7f1e7-d797-46d4-a19a-d1b794e4e309",
+      "instance_count": 1,
+      "memory_in_mb_per_instance": 1024,
+      "duration_in_seconds": 164138
+    }
+  ]
+}

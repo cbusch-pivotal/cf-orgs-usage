@@ -1,0 +1,18 @@
+{
+  "orgs": [
+    {
+      "organization_guid": "9b848880-292a-4318-bceb-a70056dec2ff",
+      "organization_name": "system",
+      "period_start": "2017-09-01T00:00:00Z",
+      "period_end": "2017-09-30T23:59:59Z",
+      "spaces": null
+    },
+    {
+      "organization_guid": "901a4789-b3ec-479a-b225-36473f3c4e60",
+      "organization_name": "busch",
+      "period_start": "2017-09-01T00:00:00Z",
+      "period_end": "2017-09-30T23:59:59Z",
+      "spaces": null
+    }
+  ]
+}

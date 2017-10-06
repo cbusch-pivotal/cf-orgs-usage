@@ -1,0 +1,28 @@
+{
+  "organization_guid": "901a4789-b3ec-479a-b225-36473f3c4e60",
+  "period_start": "2017-09-01",
+  "period_end": "2017-09-10",
+  "spaces": {
+    "b0ffbbca-d9e8-4533-9158-8b6c327f486b": {
+      "space_name": "dev",
+      "task_summaries": [
+        {
+          "parent_application_guid": "0c6576a3-e1e7-4822-b8f0-8a82a3cc9e2f",
+          "parent_application_name": "attendees",
+          "memory_in_mb_per_instance": 1024,
+          "task_count_for_range": 2,
+          "total_duration_in_seconds_for_range": 139,
+          "max_concurrent_task_count_for_parent_app": 1
+        },
+        {
+          "parent_application_guid": "caf7f1e7-d797-46d4-a19a-d1b794e4e309",
+          "parent_application_name": "cf-usage-report",
+          "memory_in_mb_per_instance": 1024,
+          "task_count_for_range": 2,
+          "total_duration_in_seconds_for_range": 112,
+          "max_concurrent_task_count_for_parent_app": 1
+        }
+      ]
+    }
+  }
+}
