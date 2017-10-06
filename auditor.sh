@@ -1,10 +1,10 @@
 #!/bin/bash
-set -ex
+set -e
 
 # audit user information
 AUDIT_USER="pcf-auditor"
 AUDIT_PWD="auditor"
-AUDIT_EMAIL="apptiopcfauditor@company.com"
+AUDIT_EMAIL="pcf@company.com"
 
 # set target environment in which to create users
 #uaac target uaa.system.<DOMAIN.COM> --skip-ssl-validation
