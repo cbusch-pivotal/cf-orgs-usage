@@ -48,7 +48,7 @@ uaac member add cloud_controller.admin $AUDIT_USER
 ```
 
 ## Org and Space for Service
-Since this is a system related app, it should be pushed into the system org. As a user with system administrator privileges, create an auditor space. This will be the location to which the application will be “pushed” later in this document.
+Since this is a system related app, it should be pushed into the system org. As a user with system administrator privileges, create an `usage-audit` space. This will be the location to which the application will be “pushed” later in this document.
 
 ## Audit Usage Service (the app)
 The Audit Usage Service application was written by the Pivotal Cloud Foundry Services team specifically for customers. It is written in golang making it fast and easy to update.
@@ -96,7 +96,7 @@ env:
 There is no need to build the go project prior to pushing to Cloud Foundry. The go_buildpack will build the go executable as a Linux executable with all needed dependencies, i.e. `GOOS=linux GOARCH=amd64 go build`
 
 ### Push
-Push the executable to PCF with the following command while logged into PCF as a system administrator capable of adding applications to the system org, auditor space.
+Push the executable to PCF with the following command while logged into PCF as a system administrator capable of adding applications to the system org, `usage-audit` space.
 
 `cf push`
 
