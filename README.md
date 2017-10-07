@@ -136,3 +136,11 @@ curl "https://app-usage.system.mypcf.net/organizations/`cf org <ORG_NAME> \
 --guid`/task_usages?start=2017-10-01&end=2017-10-31" -k -v -H \
 "authorization: `cf oauth-token`" > task_usages.json
 ```
+
+## Golang project
+1. Create git project and init
+2. Create go project files
+3. Add vendor files `govendor init` and then `govendor add +local +external`
+4. `git add *`
+5. `git commit -m "initial commit"`
+ 
