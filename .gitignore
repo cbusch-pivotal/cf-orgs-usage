@@ -3,7 +3,6 @@
 *.dll
 *.so
 *.dylib
-cf-orgs-usage.tgz
 
 # Test binary, build with `go test -c`
 *.test
@@ -17,3 +16,9 @@ test.json
 ./cf-orgs-usage
 debug
 debug/*
+
+# ignore tile gen output
+cf-orgs-usage.tgz
+tile/product/*
+tile/release/*
+
