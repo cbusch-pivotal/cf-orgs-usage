@@ -3,6 +3,7 @@
 *.dll
 *.so
 *.dylib
+cf-orgs-usage.tgz
 
 # Test binary, build with `go test -c`
 *.test
