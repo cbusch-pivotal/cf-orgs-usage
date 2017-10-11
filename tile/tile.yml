@@ -1,6 +1,6 @@
 ---
 # The high-level description of your tile.
-name: cf-orgs-usage    # By convention lowercase with dashes
+name: cf-orgs-usage
 icon_file: resources/icon.png
 label: CF App Usage by Org
 description: Returns respective app, service, or task usage for all organizations in which the cf-auditoruser has proper authority.
@@ -17,13 +17,14 @@ packages:
   type: app
   manifest:
     buildpack: go_buildpack
-    path: resources/cf-orgs-usage.tgz
+    path: resources/go-code
+    #path: resources/cf-orgs-usage.zip
     memory: 512M
     disk_quota: 512M
 #  health_check: none                 # optional
 #  configurable_persistence: true     # optional
 # needs_cf_credentials if true provides CF_ADMIN_USER and CF_ADMIN_PASSWORD
-  needs_cf_credentials: true          # optional
+  needs_cf_credentials: false         # optional
 
 #stemcell_criteria:
 #  os: ubuntu-trusty
@@ -52,27 +53,27 @@ forms:
     label: CF Usage API URI
     description: Access base usage reporting, format https://app-usage.<SYSTEM_DOMAIN>
     placeholder: https://app-usage.system.mypcf.net
-    #default: https://app-usage.system.mypcf.net
+    default: https://app-usage.system.mypcf.net
   - name: CF_API
     type: string
     label: CF API URI
     description: Access the PCF foundation, format https://api.<SYSTEM_DOMAIN>
     placeholder: https://api.system.mypcf.net
-    #default: https://api.system.mypcf.net
+    default: https://api.system.mypcf.net
   - name: CF_SKIP_SSL_VALIDATION
     type: boolean
     label: Skip SSL Validation
     description: Skip SSL validation - true or false
     default: true
-  # - name: CF_ADMIN_USER
-  #   type: string
-  #   label: CF Auditor Username
-  #   description: Auditor user used to run audit reports
-  #   placeholder: pcf-auditor
-  # - name: CF_ADMIN_PASSWORD
-  #   type: secret
-  #   label: CF Auditor Password
-  #   description: Auditor user password - used to run audit reports
+  - name: CF_ADMIN_USER
+    type: string
+    label: CF Auditor Username
+    description: Auditor user used to run audit reports
+    placeholder: pcf-auditor
+  - name: CF_ADMIN_PASSWORD
+    type: secret
+    label: CF Auditor Password
+    description: Auditor user password - used to run audit reports
   - name: BASIC_USERNAME
     type: string
     label: Basic Authentication User
@@ -88,3 +89,4 @@ forms:
 requires_product_versions:
 - name: cf
   version: '~> 1.10'
+

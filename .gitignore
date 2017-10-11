@@ -3,6 +3,7 @@
 *.dll
 *.so
 *.dylib
+cf-orgs-usage
 
 # Test binary, build with `go test -c`
 *.test
@@ -21,4 +22,6 @@ debug/*
 cf-orgs-usage.tgz
 tile/product/*
 tile/release/*
+tile/metadata
+tile/resources/go-code
 

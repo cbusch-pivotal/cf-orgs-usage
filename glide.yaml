@@ -1,0 +1,50 @@
+package: github.com/cbusch-pivotal/cf-orgs-usage
+import:
+- package: github.com/cloudfoundry-community/go-cfclient
+- package: github.com/dgrijalva/jwt-go
+- package: github.com/golang/protobuf
+  subpackages:
+  - proto
+- package: github.com/labstack/echo
+  subpackages:
+  - middleware
+- package: github.com/labstack/gommon
+  subpackages:
+  - bytes
+  - color
+  - log
+  - random
+- package: github.com/mattn/go-colorable
+- package: github.com/mattn/go-isatty
+- package: github.com/moul/http2curl
+- package: github.com/palantir/stacktrace
+  subpackages:
+  - cleanpath
+- package: github.com/parnurzeal/gorequest
+- package: github.com/pkg/errors
+- package: github.com/valyala/bytebufferpool
+- package: github.com/valyala/fasttemplate
+- package: golang.org/x/crypto
+  subpackages:
+  - acme
+  - acme/autocert
+- package: golang.org/x/net
+  subpackages:
+  - context
+  - publicsuffix
+- package: golang.org/x/oauth2
+  subpackages:
+  - clientcredentials
+  - internal
+- package: golang.org/x/sys
+  subpackages:
+  - unix
+- package: google.golang.org/appengine
+  subpackages:
+  - internal
+  - internal/base
+  - internal/datastore
+  - internal/log
+  - internal/remote_api
+  - internal/urlfetch
+  - urlfetch

@@ -12,7 +12,7 @@ uaac target uaa.system.mypcf.net --skip-ssl-validation
 
 # Note: insert token after '-s' from Elastic Runtime tile -> Credentials tab -> UAA / Admin Client Credentials
 # uaac token client get admin -s <UAA ADMIN CLIENT PASSWORD>
-uaac token client get admin -s tohf0T95lFu_UBD3BWtUtK3G5bVVwpbA
+uaac token client get admin -s AsixJE8chOFgFUB8PGuhU_k1QRx2DlYd
 
 # create audit user
 uaac user add $AUDIT_USER -p $AUDIT_PWD --emails $AUDIT_EMAIL
