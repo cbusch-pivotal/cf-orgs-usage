@@ -24,7 +24,7 @@ packages:
 #  health_check: none                 # optional
 #  configurable_persistence: true     # optional
 # needs_cf_credentials if true provides CF_ADMIN_USER and CF_ADMIN_PASSWORD
-  needs_cf_credentials: false         # optional
+  needs_cf_credentials: true          # optional
 
 #stemcell_criteria:
 #  os: ubuntu-trusty
@@ -65,20 +65,20 @@ forms:
     label: Skip SSL Validation
     description: Skip SSL validation - true or false
     default: true
-  - name: CF_ADMIN_USER
-    type: string
-    label: CF Auditor Username
-    description: Auditor user used to run audit reports
-    placeholder: pcf-auditor
-  - name: CF_ADMIN_PASSWORD
-    type: secret
-    label: CF Auditor Password
-    description: Auditor user password - used to run audit reports
+#  - name: CF_ADMIN_USER
+#    type: string
+#    label: CF Auditor Username
+#    description: Auditor user used to run audit reports
+#    placeholder: pcf-auditor
+#  - name: CF_ADMIN_PASSWORD
+#    type: secret
+#    label: CF Auditor Password
+#    description: Auditor user password - used to run audit reports
   - name: BASIC_USERNAME
     type: string
     label: Basic Authentication User
     description: Basic authentication user name for external calls, i.e. https://auditor:abc123@app-usage.<APPS_DOMAIN>
-    placeholder: pcf-auditor
+    placeholder: basic
     default: pcf-auditor
   - name: BASIC_PASSWORD
     type: secret

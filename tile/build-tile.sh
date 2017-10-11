@@ -6,10 +6,16 @@ function pause(){
    read -p "$*"
 }
 
+echo "----"
+echo "Before proceeding, make sure to edit and run the 'auditor.sh' script"
+echo "in the root folder to create the Auditor Administrator user to be"
+echo "used by cf-orgs-uage app."
+pause "Press <enter> to continue or Ctrl-C to exit..."
+
 # copy files for src
 cd resources
 
-echo " "
+echo " " 
 echo "Copying source files for tile inclusion..."
 # zip up the files
 #rm -f cf-orgs-usage.zip
