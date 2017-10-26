@@ -17,6 +17,7 @@ var cfAPI string
 var cfUser string
 var cfPassword string
 var cfSkipSsl bool
+var enableBasicAuth bool
 
 // Main start point for the app
 func main() {
@@ -27,10 +28,13 @@ func main() {
 	cfPassword = os.Getenv("CF_ADMIN_PASSWORD")
 	userBasic := os.Getenv("BASIC_USERNAME")
 	passwordBasic := os.Getenv("BASIC_PASSWORD")
+	enableBasicAuth := os.Getenv("ENABLE_BASIC_AUTH") == "true"
 
 	// make sure no env variable is empty
-	if userBasic == "" || passwordBasic == "" {
-		log.Fatalf("Must set environment variables BASIC_USERNAME and BASIC_PASSWORD")
+	if enableBasicAuth == true {
+		if userBasic == "" || passwordBasic == "" {
+			log.Fatalf("Must set environment variables BASIC_USERNAME and BASIC_PASSWORD")
+		}
 	}
 	if cfAPI == "" || os.Getenv("CF_USAGE_API") == "" {
 		log.Fatalf("Must set environment variables CF_API and CF_USAGE_API")
@@ -57,12 +61,14 @@ func main() {
 	//e.GET("/task-usage/:year/:month", TaskUsageReport)
 
 	// confirm basic auth
-	e.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
-		if username == userBasic && password == passwordBasic {
-			return true, nil
-		}
-		return false, nil
-	}))
+	if enableBasicAuth == true {
+		e.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
+			if username == userBasic && password == passwordBasic {
+				return true, nil
+			}
+			return false, nil
+		}))
+	}
 	e.Logger.Fatal(e.Start(":8080"))
 }
 
