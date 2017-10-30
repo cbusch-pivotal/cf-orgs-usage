@@ -74,6 +74,11 @@ forms:
 #    type: secret
 #    label: CF Auditor Password
 #    description: Auditor user password - used to run audit reports
+  - name: ENABLE_BASIC_AUTH
+    label: Enable Basic Authentication User
+    type: boolean
+    description: Enable Basic Authentication User - true or false
+    default: true
   - name: BASIC_USERNAME
     type: string
     label: Basic Authentication User

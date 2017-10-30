@@ -8,11 +8,9 @@ AUDIT_EMAIL="pcf@company.com"
 
 # set target environment in which to create users
 #uaac target uaa.system.<DOMAIN.COM> --skip-ssl-validation
-uaac target uaa.system.mypcf.net --skip-ssl-validation
 
 # Note: insert token after '-s' from Elastic Runtime tile -> Credentials tab -> UAA / Admin Client Credentials
 # uaac token client get admin -s <UAA ADMIN CLIENT PASSWORD>
-uaac token client get admin -s AsixJE8chOFgFUB8PGuhU_k1QRx2DlYd
 
 # create audit user
 uaac user add $AUDIT_USER -p $AUDIT_PWD --emails $AUDIT_EMAIL
