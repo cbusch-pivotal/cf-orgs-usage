@@ -79,12 +79,14 @@ func ServiceUsageReport(c echo.Context) error {
 		return stacktrace.Propagate(err, "couldn't convert month to number")
 	}
 
+	// get the report
 	usageReport, err := GetServiceUsageReport(cfClient, year, month)
 
 	if err != nil {
 		return stacktrace.Propagate(err, "Couldn't get service usage report")
 	}
 
+	// flatten the report for ease of consumption
 	flat_report, err := GetFlattenedServiceOutput(usageReport)
 	if err != nil {
 		return stacktrace.Propagate(err, "Couldn't get service usage report")

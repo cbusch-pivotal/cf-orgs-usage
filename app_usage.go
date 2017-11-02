@@ -2,9 +2,9 @@ package main
 
 import (
 	"crypto/tls"
+	"fmt"
 	"net/http"
 	"os"
-	"strconv"
 	"time"
 
 	"github.com/cloudfoundry-community/go-cfclient"
@@ -55,37 +55,102 @@ type FlattenOrgAppUsage struct {
 	DurationInSeconds     int       `json:"duration_in_seconds"`
 }
 
-// AppUsageReport handles the app-usage call validating the date
-//  and executing the report creation
-func AppUsageReport(c echo.Context) error {
+// AppUsageReportByRange handle a start and end date in the call
+//  /app-usage?start=2017-11-01&end=2017-11-03
+func AppUsageReportByRange(c echo.Context) error {
 
-	year, err := strconv.Atoi(c.Param("year"))
+	// format the date range
+	fmt.Println("Start date is '" + c.QueryParam("start") + "'")
+	start, err := time.Parse(dateFormat, c.QueryParam("start"))
 	if err != nil {
-		return stacktrace.Propagate(err, "couldn't convert year to number")
+		return stacktrace.Propagate(err, "Improper start date provided in the URL")
 	}
-	month, err := strconv.Atoi(c.Param("month"))
+	end, err := time.Parse(dateFormat, c.QueryParam("end"))
 	if err != nil {
-		return stacktrace.Propagate(err, "couldn't convert month to number")
-	}
-	usageReport, err := GetAppUsageReport(cfClient, year, month)
-
-	if err != nil {
-		return stacktrace.Propagate(err, "Couldn't get app usage report")
+		return stacktrace.Propagate(err, "Improper end date provided in the URL")
 	}
 
-	flat_report, err := GetFlattenedAppOutput(usageReport)
+	// format the start and end string
+	dateRange := GenDateRange(start, end)
+	fmt.Println("Date range is ", dateRange)
+
+	// Generate the report for all orgs
+	usageReport, err := GenAppUsageReport(cfClient, dateRange)
 	if err != nil {
-		return stacktrace.Propagate(err, "Couldn't get app usage report")
+		return stacktrace.Propagate(err, "Couldn't get app usage report for yesterday")
 	}
 
-	return c.JSON(http.StatusOK, flat_report)
+	// return report
+	return c.JSON(http.StatusOK, usageReport)
 }
 
-// GetAppUsageReport pulls the entire report together
-func GetAppUsageReport(client *cfclient.Client, year int, month int) (*AppUsage, error) {
-	if !(month >= 1 && month <= 12) {
-		return nil, stacktrace.NewError("Month must be between 1-12")
+// AppUsageReportForToday handles the static nature of Apptio's Datalink
+//  in order to gather app usage data for the previous day
+func AppUsageReportForToday(c echo.Context) error {
+	// format the date range
+	dateToday := time.Now().Local()
+
+	// format the start and end string
+	dateRange := GenDateRange(dateToday, dateToday)
+	fmt.Println("Date range is ", dateRange)
+
+	// Generate the report for all orgs
+	usageReport, err := GenAppUsageReport(cfClient, dateRange)
+	if err != nil {
+		return stacktrace.Propagate(err, "Couldn't get app usage report for yesterday")
 	}
+
+	// return report
+	return c.JSON(http.StatusOK, usageReport)
+}
+
+// AppUsageReportForYesterday handles the static nature of Apptio's Datalink
+//  in order to gather app usage data for the previous day
+func AppUsageReportForYesterday(c echo.Context) error {
+	// format the date range
+	dateToday := time.Now().Local()
+	dateYesterday := dateToday.AddDate(0, 0, -1)
+
+	// format the start and end string
+	dateRange := GenDateRange(dateYesterday, dateYesterday)
+	fmt.Println("Date range is ", dateRange)
+
+	// Generate the report for all orgs
+	usageReport, err := GenAppUsageReport(cfClient, dateRange)
+	if err != nil {
+		return stacktrace.Propagate(err, "Couldn't get app usage report for yesterday")
+	}
+
+	// return report
+	return c.JSON(http.StatusOK, usageReport)
+}
+
+// AppUsageReportForMonth handles the app-usage call validating the date
+//  and executing the report creation
+func AppUsageReportForMonth(c echo.Context) error {
+
+	// first day of month and today's date
+	dateToday := time.Now().Local()
+	currentYear, currentMonth, _ := dateToday.Date()
+	currentLocation := dateToday.Location()
+	firstOfMonth := time.Date(currentYear, currentMonth, 1, 0, 0, 0, 0, currentLocation)
+
+	// format the start and end string
+	dateRange := GenDateRange(firstOfMonth, dateToday)
+	fmt.Println("Date range is ", dateRange)
+
+	// Generate the report for all orgs
+	usageReport, err := GenAppUsageReport(cfClient, dateRange)
+	if err != nil {
+		return stacktrace.Propagate(err, "Couldn't get app usage report for yesterday")
+	}
+
+	// return report
+	return c.JSON(http.StatusOK, usageReport)
+}
+
+// GenAppUsageReport pulls the entire report together
+func GenAppUsageReport(client *cfclient.Client, dateRange string) (*FlattenAppUsage, error) {
 
 	// get a list of orgs within the foundation
 	orgs, err := client.ListOrgs()
@@ -101,7 +166,7 @@ func GetAppUsageReport(client *cfclient.Client, year int, month int) (*AppUsage,
 
 	// loop through orgs and get app usage report for each
 	for _, org := range orgs {
-		orgUsage, err := GetAppUsageForOrg(token, org, year, month)
+		orgUsage, err := AppUsageForOrg(token, org, dateRange)
 		if err != nil {
 			return nil, stacktrace.Propagate(err, "Failed getting app usage for org: "+org.Name)
 		}
@@ -109,15 +174,21 @@ func GetAppUsageReport(client *cfclient.Client, year int, month int) (*AppUsage,
 		report.Orgs = append(report.Orgs, *orgUsage)
 	}
 
-	return &report, nil
+	// flatten the complexity of report for ease of consumption
+	flatReport, err := GetFlattenedAppOutput(&report)
+	if err != nil {
+		return nil, stacktrace.Propagate(err, "Couldn't get app usage report")
+	}
+
+	return &flatReport, nil
 }
 
-// GetAppUsageForOrg queries apps manager app_usages API for the orgs app usage information
-func GetAppUsageForOrg(token string, org cfclient.Org, year int, month int) (*OrgAppUsage, error) {
+// AppUsageForOrg queries apps manager app_usages API for the orgs app usage information
+func AppUsageForOrg(token string, org cfclient.Org, dateRange string) (*OrgAppUsage, error) {
 	usageAPI := os.Getenv("CF_USAGE_API")
 	target := &OrgAppUsage{}
 	request := gorequest.New()
-	resp, _, err := request.Get(usageAPI+"/organizations/"+org.Guid+"/app_usages?"+GenTimeParams(year, month)).
+	resp, _, err := request.Get(usageAPI+"/organizations/"+org.Guid+"/app_usages?"+dateRange).
 		Set("Authorization", token).TLSClientConfig(&tls.Config{InsecureSkipVerify: cfSkipSsl}).
 		EndStruct(&target)
 	if err != nil {
@@ -127,10 +198,11 @@ func GetAppUsageForOrg(token string, org cfclient.Org, year int, month int) (*Or
 	if resp.StatusCode != 200 {
 		return nil, stacktrace.NewError("Failed getting app usage report %v", resp)
 	}
+
 	return target, nil
 }
 
-//GetFlattenedAppOutput convert formatting to flattened output
+// GetFlattenedAppOutput convert formatting to flattened output
 func GetFlattenedAppOutput(usageReport *AppUsage) (FlattenAppUsage, error) {
 
 	var flatUsage FlattenAppUsage
