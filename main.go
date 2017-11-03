@@ -64,7 +64,7 @@ func main() {
 	e.GET("/app-usage", AppUsageReportByRange)
 	e.GET("/app-usage/today", AppUsageReportForToday)
 	e.GET("/app-usage/yesterday", AppUsageReportForYesterday)
-	e.GET("/app-usage/month", AppUsageReportForMonth)
+	e.GET("/app-usage/thismonth", AppUsageReportForMonth)
 	//e.GET("/app-usage/:year/:month", AppUsageReportForMonth)
 
 	// service-usage endpoints
