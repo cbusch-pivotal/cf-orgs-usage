@@ -71,7 +71,7 @@ func main() {
 	e.GET("/service-usage", ServiceUsageReportByRange)
 	e.GET("/service-usage/today", ServiceUsageReportForToday)
 	e.GET("/service-usage/yesterday", ServiceUsageReportForYesterday)
-	e.GET("/service-usage/:year/:month", ServiceUsageReport)
+	e.GET("/service-usage/:year/:month", AppUsageReportForMonth)
 
 	// task-usage endpoints (need to meet with Pivotal engineers to fix issue)
 	//e.GET("/task-usage/:year/:month", TaskUsageReport)

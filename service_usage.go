@@ -161,34 +161,6 @@ func ServiceUsageReportForMonth(c echo.Context) error {
 	return c.JSON(http.StatusOK, flatUsage)
 }
 
-// ServiceUsageReport handles the service-usage call validating the date
-//  and executing the report creation
-/* func ServiceUsageReport(c echo.Context) error {
-	year, err := strconv.Atoi(c.Param("year"))
-	if err != nil {
-		return stacktrace.Propagate(err, "couldn't convert year to number")
-	}
-	month, err := strconv.Atoi(c.Param("month"))
-	if err != nil {
-		return stacktrace.Propagate(err, "couldn't convert month to number")
-	}
-
-	// get the report
-	flatUsage, err := GetServiceUsageReport(cfClient, year, month)
-
-	if err != nil {
-		return stacktrace.Propagate(err, "Couldn't get service usage report")
-	}
-
-	// flatten the report for ease of consumption
-	flatReport, err := GetFlattenedServiceOutput(flatUsage)
-	if err != nil {
-		return stacktrace.Propagate(err, "Couldn't get service usage report")
-	}
-
-	return c.JSON(http.StatusOK, flatReport)
-} */
-
 // GetServiceUsageReport pulls the entire report together
 func GetServiceUsageReport(client *cfclient.Client, dateRange string) (*FlattenServiceUsage, error) {
 
