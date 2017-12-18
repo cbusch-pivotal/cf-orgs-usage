@@ -2,9 +2,9 @@ package main
 
 import (
 	"crypto/tls"
+	"fmt"
 	"net/http"
 	"os"
-	"strconv"
 	"time"
 
 	cfclient "github.com/cloudfoundry-community/go-cfclient"
@@ -67,9 +67,103 @@ type FlattenOrgServiceUsage struct {
 	ServiceInstanceDeletion time.Time `json:"service_instance_deletion"`
 }
 
+// ServiceUsageReportByRange handle a start and end date in the call
+//  /service-usage?start=2017-11-01&end=2017-11-03
+func ServiceUsageReportByRange(c echo.Context) error {
+
+	// format the date range
+	fmt.Println("Start date is '" + c.QueryParam("start") + "'")
+	start, err := time.Parse(dateFormat, c.QueryParam("start"))
+	if err != nil {
+		return stacktrace.Propagate(err, "Improper start date provided in the URL")
+	}
+	end, err := time.Parse(dateFormat, c.QueryParam("end"))
+	if err != nil {
+		return stacktrace.Propagate(err, "Improper end date provided in the URL")
+	}
+
+	// format the start and end string
+	dateRange := GenDateRange(start, end)
+	fmt.Println("Date range is ", dateRange)
+
+	// Generate the report for all orgs
+	flatUsage, err := GetServiceUsageReport(cfClient, dateRange)
+	if err != nil {
+		return stacktrace.Propagate(err, "Couldn't service service usage report for yesterday")
+	}
+
+	// return report
+	return c.JSON(http.StatusOK, flatUsage)
+}
+
+// ServiceUsageReportForToday handles the static nature of Apptio's Datalink
+//  in order to gather service usage data for the previous day
+func ServiceUsageReportForToday(c echo.Context) error {
+	// format the date range
+	dateToday := time.Now().Local()
+
+	// format the start and end string
+	dateRange := GenDateRange(dateToday, dateToday)
+	fmt.Println("Date range is ", dateRange)
+
+	// Generate the report for all orgs
+	flatUsage, err := GetServiceUsageReport(cfClient, dateRange)
+	if err != nil {
+		return stacktrace.Propagate(err, "Couldn't get service usage report for yesterday")
+	}
+
+	// return report
+	return c.JSON(http.StatusOK, flatUsage)
+}
+
+// ServiceUsageReportForYesterday handles the static nature of Apptio's Datalink
+//  in order to gather service usage data for the previous day
+func ServiceUsageReportForYesterday(c echo.Context) error {
+	// format the date range
+	dateToday := time.Now().Local()
+	dateYesterday := dateToday.AddDate(0, 0, -1)
+
+	// format the start and end string
+	dateRange := GenDateRange(dateYesterday, dateYesterday)
+	fmt.Println("Date range is ", dateRange)
+
+	// Generate the report for all orgs
+	flatUsage, err := GetServiceUsageReport(cfClient, dateRange)
+	if err != nil {
+		return stacktrace.Propagate(err, "Couldn't get service usage report for yesterday")
+	}
+
+	// return report
+	return c.JSON(http.StatusOK, flatUsage)
+}
+
+// ServiceUsageReportForMonth handles the service-usage call validating the date
+//  and executing the report creation
+func ServiceUsageReportForMonth(c echo.Context) error {
+
+	// first day of month and today's date
+	dateToday := time.Now().Local()
+	currentYear, currentMonth, _ := dateToday.Date()
+	currentLocation := dateToday.Location()
+	firstOfMonth := time.Date(currentYear, currentMonth, 1, 0, 0, 0, 0, currentLocation)
+
+	// format the start and end string
+	dateRange := GenDateRange(firstOfMonth, dateToday)
+	fmt.Println("Date range is ", dateRange)
+
+	// Generate the report for all orgs
+	flatUsage, err := GetServiceUsageReport(cfClient, dateRange)
+	if err != nil {
+		return stacktrace.Propagate(err, "Couldn't get service usage report for yesterday")
+	}
+
+	// return report
+	return c.JSON(http.StatusOK, flatUsage)
+}
+
 // ServiceUsageReport handles the service-usage call validating the date
 //  and executing the report creation
-func ServiceUsageReport(c echo.Context) error {
+/* func ServiceUsageReport(c echo.Context) error {
 	year, err := strconv.Atoi(c.Param("year"))
 	if err != nil {
 		return stacktrace.Propagate(err, "couldn't convert year to number")
@@ -80,26 +174,23 @@ func ServiceUsageReport(c echo.Context) error {
 	}
 
 	// get the report
-	usageReport, err := GetServiceUsageReport(cfClient, year, month)
+	flatUsage, err := GetServiceUsageReport(cfClient, year, month)
 
 	if err != nil {
 		return stacktrace.Propagate(err, "Couldn't get service usage report")
 	}
 
 	// flatten the report for ease of consumption
-	flat_report, err := GetFlattenedServiceOutput(usageReport)
+	flatReport, err := GetFlattenedServiceOutput(flatUsage)
 	if err != nil {
 		return stacktrace.Propagate(err, "Couldn't get service usage report")
 	}
 
-	return c.JSON(http.StatusOK, flat_report)
-}
+	return c.JSON(http.StatusOK, flatReport)
+} */
 
 // GetServiceUsageReport pulls the entire report together
-func GetServiceUsageReport(client *cfclient.Client, year int, month int) (*ServiceUsage, error) {
-	if !(month >= 1 && month <= 12) {
-		return nil, stacktrace.NewError("Month must be between 1-12")
-	}
+func GetServiceUsageReport(client *cfclient.Client, dateRange string) (*FlattenServiceUsage, error) {
 
 	// get a list of orgs within the foundation
 	orgs, err := client.ListOrgs()
@@ -115,7 +206,7 @@ func GetServiceUsageReport(client *cfclient.Client, year int, month int) (*Servi
 
 	// loop through orgs and get service usage report for each
 	for _, org := range orgs {
-		orgUsage, err := GetServiceUsageForOrg(token, org, year, month)
+		orgUsage, err := GetServiceUsageForOrg(token, org, dateRange)
 		if err != nil {
 			return nil, stacktrace.Propagate(err, "Failed getting service usage for org: "+org.Name)
 		}
@@ -123,15 +214,20 @@ func GetServiceUsageReport(client *cfclient.Client, year int, month int) (*Servi
 		report.Orgs = append(report.Orgs, *orgUsage)
 	}
 
-	return &report, nil
+	flatServiceReport, err := GetFlattenedServiceOutput(&report)
+	if err != nil {
+		return nil, stacktrace.Propagate(err, "Couldn't get service usage report")
+	}
+
+	return &flatServiceReport, nil
 }
 
 // GetServiceUsageForOrg queries apps manager service_usages API for the orgs service usage information
-func GetServiceUsageForOrg(token string, org cfclient.Org, year int, month int) (*OrgServiceUsage, error) {
+func GetServiceUsageForOrg(token string, org cfclient.Org, dateRange string) (*OrgServiceUsage, error) {
 	usageAPI := os.Getenv("CF_USAGE_API")
 	target := &OrgServiceUsage{}
 	request := gorequest.New()
-	resp, _, err := request.Get(usageAPI+"/organizations/"+org.Guid+"/service_usages?"+GenTimeParams(year, month)).
+	resp, _, err := request.Get(usageAPI+"/organizations/"+org.Guid+"/service_usages?"+dateRange).
 		Set("Authorization", token).TLSClientConfig(&tls.Config{InsecureSkipVerify: cfSkipSsl}).
 		EndStruct(&target)
 	if err != nil {
