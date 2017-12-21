@@ -20,6 +20,7 @@ type TaskUsage struct {
 }
 
 // OrgTaskUsage Single org usage
+//   Spaces           map[string]{struct, interface} {
 type OrgTaskUsage struct {
 	OrganizationGUID string    `json:"organization_guid"`
 	OrgName          string    `json:"organization_name"`
