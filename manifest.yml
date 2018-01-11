@@ -11,4 +11,5 @@ env:
   ENABLE_BASIC_AUTH: false
   BASIC_USERNAME: basic
   BASIC_PASSWORD: basic
+  ENABLE_BASIC_AUTH: true
   GOPACKAGENAME: github.com/cbusch-pivotal/cf-orgs-usage
