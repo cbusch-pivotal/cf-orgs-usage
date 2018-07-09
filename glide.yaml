@@ -48,3 +48,5 @@ import:
   - internal/remote_api
   - internal/urlfetch
   - urlfetch
+- package: github.com/jszwec/csvutil
+  version: 86df7e25d21b9a2e1702e437f784284d8d0a792d

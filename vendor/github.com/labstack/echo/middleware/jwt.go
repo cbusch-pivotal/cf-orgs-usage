@@ -16,6 +16,15 @@ type (
 		// Skipper defines a function to skip middleware.
 		Skipper Skipper
 
+		// BeforeFunc defines a function which is executed just before the middleware.
+		BeforeFunc BeforeFunc
+
+		// SuccessHandler defines a function which is executed for a valid token.
+		SuccessHandler JWTSuccessHandler
+
+		// ErrorHandler defines a function which is executed for an invalid token.
+		ErrorHandler JWTErrorHandler
+
 		// Signing key to validate token.
 		// Required.
 		SigningKey interface{}
@@ -48,6 +57,12 @@ type (
 		keyFunc jwt.Keyfunc
 	}
 
+	// JWTSuccessHandler defines a function which is executed for a valid token.
+	JWTSuccessHandler func(echo.Context)
+
+	// JWTErrorHandler defines a function which is executed for an invalid token.
+	JWTErrorHandler func(error, echo.Context, echo.HandlerFunc) error
+
 	jwtExtractor func(echo.Context) (string, error)
 )
 
@@ -58,8 +73,7 @@ const (
 
 // Errors
 var (
-	ErrJWTMissing = echo.NewHTTPError(http.StatusBadRequest, "Missing or malformed jwt")
-	ErrJWTInvalid = echo.NewHTTPError(http.StatusUnauthorized, "Invalid or expired jwt")
+	ErrJWTMissing = echo.NewHTTPError(http.StatusBadRequest, "missing or malformed jwt")
 )
 
 var (
@@ -116,7 +130,7 @@ func JWTWithConfig(config JWTConfig) echo.MiddlewareFunc {
 	config.keyFunc = func(t *jwt.Token) (interface{}, error) {
 		// Check the signing method
 		if t.Method.Alg() != config.SigningMethod {
-			return nil, fmt.Errorf("Unexpected jwt signing method=%v", t.Header["alg"])
+			return nil, fmt.Errorf("unexpected jwt signing method=%v", t.Header["alg"])
 		}
 		return config.SigningKey, nil
 	}
@@ -137,8 +151,15 @@ func JWTWithConfig(config JWTConfig) echo.MiddlewareFunc {
 				return next(c)
 			}
 
+			if config.BeforeFunc != nil {
+				config.BeforeFunc(c)
+			}
+
 			auth, err := extractor(c)
 			if err != nil {
+				if config.ErrorHandler != nil {
+					return config.ErrorHandler(err, c, next)
+				}
 				return err
 			}
 			token := new(jwt.Token)
@@ -153,12 +174,18 @@ func JWTWithConfig(config JWTConfig) echo.MiddlewareFunc {
 			if err == nil && token.Valid {
 				// Store user information from token into context.
 				c.Set(config.ContextKey, token)
+				if config.SuccessHandler != nil {
+					config.SuccessHandler(c)
+				}
 				return next(c)
 			}
+			if config.ErrorHandler != nil {
+				return config.ErrorHandler(err, c, next)
+			}
 			return &echo.HTTPError{
-				Code:    ErrJWTInvalid.Code,
-				Message: ErrJWTInvalid.Message,
-				Inner:   err,
+				Code:     http.StatusUnauthorized,
+				Message:  "Invalid or expired jwt",
+				Internal: err,
 			}
 		}
 	}
