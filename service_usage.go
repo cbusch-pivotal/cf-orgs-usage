@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	cfclient "github.com/cloudfoundry-community/go-cfclient"
+	"github.com/jszwec/csvutil"
 	"github.com/labstack/echo"
 	"github.com/palantir/stacktrace"
 	"github.com/parnurzeal/gorequest"
@@ -67,6 +69,21 @@ type FlattenOrgServiceUsage struct {
 	ServiceInstanceDeletion time.Time `json:"service_instance_deletion"`
 }
 
+// handles report formatting if CSV is specified
+func serviceReportFormatter(c echo.Context, usageReport *FlattenServiceUsage) error {
+	var format = strings.ToLower(c.QueryParam("format"))
+	if format == "csv" {
+		fmt.Println("csv output requested")
+		b, err := csvutil.Marshal(usageReport.Orgs)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+		return c.String(http.StatusOK, string(b))
+	} else {
+		return c.JSON(http.StatusOK, usageReport)
+	}
+}
+
 // ServiceUsageReportByRange handle a start and end date in the call
 //  /service-usage?start=2017-11-01&end=2017-11-03
 func ServiceUsageReportByRange(c echo.Context) error {
@@ -93,7 +110,7 @@ func ServiceUsageReportByRange(c echo.Context) error {
 	}
 
 	// return report
-	return c.JSON(http.StatusOK, flatUsage)
+	return serviceReportFormatter(c, flatUsage)
 }
 
 // ServiceUsageReportForToday handles the static nature of Apptio's Datalink
@@ -134,7 +151,7 @@ func ServiceUsageReportForYesterday(c echo.Context) error {
 	}
 
 	// return report
-	return c.JSON(http.StatusOK, flatUsage)
+	return serviceReportFormatter(c, flatUsage)
 }
 
 // ServiceUsageReportForMonth handles the service-usage call validating the date
@@ -158,7 +175,7 @@ func ServiceUsageReportForMonth(c echo.Context) error {
 	}
 
 	// return report
-	return c.JSON(http.StatusOK, flatUsage)
+	return serviceReportFormatter(c, flatUsage)
 }
 
 // GetServiceUsageReport pulls the entire report together

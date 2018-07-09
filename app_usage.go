@@ -58,7 +58,7 @@ type FlattenOrgAppUsage struct {
 }
 
 // handles report formatting if CSV is specified
-func Formatter(c echo.Context, usageReport *FlattenAppUsage) error {
+func appReportFormatter(c echo.Context, usageReport *FlattenAppUsage) error {
 	var format = strings.ToLower(c.QueryParam("format"))
 	if format == "csv" {
 		fmt.Println("csv output requested")
@@ -98,7 +98,7 @@ func AppUsageReportByRange(c echo.Context) error {
 	}
 
 	// return report
-	return Formatter(c, usageReport)
+	return appReportFormatter(c, usageReport)
 }
 
 // AppUsageReportForToday handles the static nature of Apptio's Datalink
@@ -118,7 +118,7 @@ func AppUsageReportForToday(c echo.Context) error {
 	}
 
 	// return report
-	return Formatter(c, usageReport)
+	return appReportFormatter(c, usageReport)
 }
 
 // AppUsageReportForYesterday handles the static nature of Apptio's Datalink
@@ -139,7 +139,7 @@ func AppUsageReportForYesterday(c echo.Context) error {
 	}
 
 	// return report
-	return Formatter(c, usageReport)
+	return appReportFormatter(c, usageReport)
 }
 
 // AppUsageReportForMonth handles the app-usage call validating the date
@@ -163,7 +163,7 @@ func AppUsageReportForMonth(c echo.Context) error {
 	}
 
 	// return report
-	return Formatter(c, usageReport)
+	return appReportFormatter(c, usageReport)
 }
 
 // GenAppUsageReport pulls the entire report together
