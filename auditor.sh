@@ -6,11 +6,16 @@ AUDIT_USER="pcf-auditor"
 AUDIT_PWD="auditor"
 AUDIT_EMAIL="pcf@company.com"
 
-# set target environment in which to create users
-#uaac target uaa.system.<DOMAIN.COM> --skip-ssl-validation
+# System Domain from PAS tile settings
+SYSTEM_DOMAIN="system.pcf.example.com"
 
-# Note: insert token after '-s' from Elastic Runtime tile -> Credentials tab -> UAA / Admin Client Credentials
-# uaac token client get admin -s <UAA ADMIN CLIENT PASSWORD>
+# From Elastic Runtime tile -> Credentials tab -> UAA / Admin Client Credentials
+ADMIN_CLIENT_SECRET="
+
+# set target environment in which to create users
+uaac target uaa.${SYSTEM_DOMAIN}  --skip-ssl-validation
+
+uaac token client get admin -s ${ADMIN_CLIENT_SECRET}
 
 # create audit user
 uaac user add $AUDIT_USER -p $AUDIT_PWD --emails $AUDIT_EMAIL
