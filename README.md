@@ -174,7 +174,17 @@ $ source ~/tile-generator-env/bin/activate
 $ cd tile
 ```
 
-4. Build the tile with the current code set
+4. Create a metadata file so that pcf commands will work. It should be in this format. Once created you can validate that the `pcf` command will work by running `pcf cf-info`.
+
+```
+---
+opsmgr:
+    url: https://<opsman url>
+    username: admin
+    password: <redacted>
+```
+
+5. Build the tile with the current code set
 
 ```
 $ ./build-tile.sh

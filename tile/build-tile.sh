@@ -22,7 +22,7 @@ echo "Copying source files for tile inclusion..."
 #zip -r cf-orgs-usage.zip ../../*.go ../../manifest.yml ../../glide.yaml ../../vendor/*
 
 # OR copy the code - edit tile.yml to reference which method
-rm -r go-code
+rm -r go-code || true
 mkdir go-code
 cp ../../*.go go-code
 cp ../../manifest.yml go-code
