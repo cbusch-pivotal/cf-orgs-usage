@@ -17,56 +17,56 @@ import (
 
 // ServiceUsage array of orgs usage
 type ServiceUsage struct {
-	Orgs []OrgServiceUsage `json:"orgs"`
+	Orgs []OrgServiceUsage `json:"orgs" csv:"orgs"`
 }
 
 // OrgServiceUsage Single org usage
 type OrgServiceUsage struct {
-	OrganizationGUID string    `json:"organization_guid"`
-	OrgName          string    `json:"organization_name"`
-	PeriodStart      time.Time `json:"period_start"`
-	PeriodEnd        time.Time `json:"period_end"`
+	OrganizationGUID string    `json:"organization_guid" csv:"organization_guid"`
+	OrgName          string    `json:"organization_name" csv:"organization_name"`
+	PeriodStart      time.Time `json:"period_start" csv:"period_start"`
+	PeriodEnd        time.Time `json:"period_end" csv:"period_end"`
 	ServiceUsages    []struct {
-		Deleted                 bool      `json:"deleted"`
-		DurationInSeconds       float32   `json:"duration_in_seconds"`
-		SpaceGUID               string    `json:"space_guid"`
-		SpaceName               string    `json:"space_name"`
-		ServiceInstanceGUID     string    `json:"service_instance_guid"`
-		ServiceInstanceName     string    `json:"service_instance_name"`
-		ServiceInstanceType     string    `json:"service_instance_type"`
-		ServicePlanGUID         string    `json:"service_plan_guid"`
-		ServicePlanName         string    `json:"service_plan_name"`
-		ServiceName             string    `json:"service_name"`
-		ServiceGUID             string    `json:"service_guid"`
-		ServiceInstanceCreation time.Time `json:"service_instance_creation"`
-		ServiceInstanceDeletion time.Time `json:"service_instance_deletion"`
-	} `json:"service_usages"`
+		Deleted                 bool      `json:"deleted" csv:"deleted"`
+		DurationInSeconds       float32   `json:"duration_in_seconds" csv:"duration_in_seconds"`
+		SpaceGUID               string    `json:"space_guid" csv:"space_guid"`
+		SpaceName               string    `json:"space_name" csv:"space_name"`
+		ServiceInstanceGUID     string    `json:"service_instance_guid" csv:"service_instance_guid"`
+		ServiceInstanceName     string    `json:"service_instance_name" csv:"service_instance_name"`
+		ServiceInstanceType     string    `json:"service_instance_type" csv:"service_instance_type"`
+		ServicePlanGUID         string    `json:"service_plan_guid" csv:"service_plan_guid"`
+		ServicePlanName         string    `json:"service_plan_name" csv:"service_plan_name"`
+		ServiceName             string    `json:"service_name" csv:"service_name"`
+		ServiceGUID             string    `json:"service_guid" csv:"service_guid"`
+		ServiceInstanceCreation time.Time `json:"service_instance_creation" csv:"service_instance_creation"`
+		ServiceInstanceDeletion time.Time `json:"service_instance_deletion" csv:"service_instance_deletion"`
+	} `json:"service_usages" csv:"service_usages"`
 }
 
 // FlattenServiceUsage flattened data for simple response with repeated org info
 type FlattenServiceUsage struct {
-	Orgs []FlattenOrgServiceUsage `json:"service_usages"`
+	Orgs []FlattenOrgServiceUsage `json:"service_usages" csv:"service_usages"`
 }
 
 // FlattenOrgServiceUsage flattened data for simple response usage
 type FlattenOrgServiceUsage struct {
-	OrganizationGUID        string    `json:"organization_guid"`
-	OrgName                 string    `json:"organization_name"`
-	PeriodStart             time.Time `json:"period_start"`
-	PeriodEnd               time.Time `json:"period_end"`
-	Deleted                 bool      `json:"deleted"`
-	DurationInSeconds       float32   `json:"duration_in_seconds"`
-	SpaceGUID               string    `json:"space_guid"`
-	SpaceName               string    `json:"space_name"`
-	ServiceInstanceGUID     string    `json:"service_instance_guid"`
-	ServiceInstanceName     string    `json:"service_instance_name"`
-	ServiceInstanceType     string    `json:"service_instance_type"`
-	ServicePlanGUID         string    `json:"service_plan_guid"`
-	ServicePlanName         string    `json:"service_plan_name"`
-	ServiceName             string    `json:"service_name"`
-	ServiceGUID             string    `json:"service_guid"`
-	ServiceInstanceCreation time.Time `json:"service_instance_creation"`
-	ServiceInstanceDeletion time.Time `json:"service_instance_deletion"`
+	OrganizationGUID        string    `json:"organization_guid" csv:"organization_guid"`
+	OrgName                 string    `json:"organization_name" csv:"organization_name"`
+	PeriodStart             time.Time `json:"period_start" csv:"period_start"`
+	PeriodEnd               time.Time `json:"period_end" csv:"period_end"`
+	Deleted                 bool      `json:"deleted" csv:"deleted"`
+	DurationInSeconds       float32   `json:"duration_in_seconds" csv:"duration_in_seconds"`
+	SpaceGUID               string    `json:"space_guid" csv:"space_guid"`
+	SpaceName               string    `json:"space_name" csv:"space_name"`
+	ServiceInstanceGUID     string    `json:"service_instance_guid" csv:"service_instance_guid"`
+	ServiceInstanceName     string    `json:"service_instance_name" csv:"service_instance_name"`
+	ServiceInstanceType     string    `json:"service_instance_type" csv:"service_instance_type"`
+	ServicePlanGUID         string    `json:"service_plan_guid" csv:"service_plan_guid"`
+	ServicePlanName         string    `json:"service_plan_name" csv:"service_plan_name"`
+	ServiceName             string    `json:"service_name" csv:"service_name"`
+	ServiceGUID             string    `json:"service_guid" csv:"service_guid"`
+	ServiceInstanceCreation time.Time `json:"service_instance_creation" csv:"service_instance_creation"`
+	ServiceInstanceDeletion time.Time `json:"service_instance_deletion" csv:"service_instance_deletion"`
 }
 
 // handles report formatting if CSV is specified
