@@ -130,7 +130,7 @@ func ServiceUsageReportForToday(c echo.Context) error {
 	}
 
 	// return report
-	return c.JSON(http.StatusOK, flatUsage)
+	return serviceReportFormatter(c, flatUsage)
 }
 
 // ServiceUsageReportForYesterday handles the static nature of Apptio's Datalink
