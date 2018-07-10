@@ -88,6 +88,16 @@ Audit usage performs roughly the following function, adding to the normal output
 7. Appends information for the organization to the foundation report
 8. Returns the completed foundation report in JSON format to the caller.
 
+### CSV Support
+
+If you require output in CSV, simply add `format=csv` to the http call. For example:
+
+`curl http://basic:basic@cf-orgs-usage.apps.mypcf.net/app-usage/thismonth?format=csv`
+
+or
+
+`curl http://basic:basic@cf-orgs-usage.apps.mypcf.net/service-usage?start=2018-07-01\&end=2018-07-09\&format=csv`
+
 ## Service Configuration
 
 ### About manifest.yml

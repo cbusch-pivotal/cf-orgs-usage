@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/cloudfoundry-community/go-cfclient"
+	"github.com/jszwec/csvutil"
 	"github.com/labstack/echo"
 	"github.com/palantir/stacktrace"
 	"github.com/parnurzeal/gorequest"
@@ -15,44 +17,59 @@ import (
 
 //AppUsage array of orgs usage
 type AppUsage struct {
-	Orgs []OrgAppUsage `json:"orgs"`
+	Orgs []OrgAppUsage `json:"orgs" csv:"orgs"`
 }
 
 //OrgAppUsage Single org usage
 type OrgAppUsage struct {
-	OrganizationGUID string    `json:"organization_guid"`
-	OrgName          string    `json:"organization_name"`
-	PeriodStart      time.Time `json:"period_start"`
-	PeriodEnd        time.Time `json:"period_end"`
+	OrganizationGUID string    `json:"organization_guid" csv:"organization_guid"`
+	OrgName          string    `json:"organization_name" csv:"organization_name"`
+	PeriodStart      time.Time `json:"period_start" csv:"period_start"`
+	PeriodEnd        time.Time `json:"period_end" csv:"period_end"`
 	AppUsages        []struct {
-		SpaceGUID             string `json:"space_guid"`
-		SpaceName             string `json:"space_name"`
-		AppName               string `json:"app_name"`
-		AppGUID               string `json:"app_guid"`
-		InstanceCount         int    `json:"instance_count"`
-		MemoryInMbPerInstance int    `json:"memory_in_mb_per_instance"`
-		DurationInSeconds     int    `json:"duration_in_seconds"`
-	} `json:"app_usages"`
+		SpaceGUID             string `json:"space_guid" csv:"space_guid"`
+		SpaceName             string `json:"space_name" csv:"space_name"`
+		AppName               string `json:"app_name" csv:"app_name"`
+		AppGUID               string `json:"app_guid" csv:"app_guid"`
+		InstanceCount         int    `json:"instance_count" csv:"instance_count"`
+		MemoryInMbPerInstance int    `json:"memory_in_mb_per_instance" csv:"memory_in_mb_per_instance"`
+		DurationInSeconds     int    `json:"duration_in_seconds" csv:"duration_in_seconds"`
+	} `json:"app_usages" csv:"app_usages"`
 }
 
 // FlattenAppUsage flattened data for simple response with repeated org info
 type FlattenAppUsage struct {
-	Orgs []FlattenOrgAppUsage `json:"app_usages"`
+	Orgs []FlattenOrgAppUsage `json:"app_usages" csv:"app_usages"`
 }
 
 // FlattenOrgAppUsage flattened data for simple response usage
 type FlattenOrgAppUsage struct {
-	OrganizationGUID      string    `json:"organization_guid"`
-	OrgName               string    `json:"organization_name"`
-	PeriodStart           time.Time `json:"period_start"`
-	PeriodEnd             time.Time `json:"period_end"`
-	SpaceGUID             string    `json:"space_guid"`
-	SpaceName             string    `json:"space_name"`
-	AppName               string    `json:"app_name"`
-	AppGUID               string    `json:"app_guid"`
-	InstanceCount         int       `json:"instance_count"`
-	MemoryInMbPerInstance int       `json:"memory_in_mb_per_instance"`
-	DurationInSeconds     int       `json:"duration_in_seconds"`
+	OrganizationGUID      string    `json:"organization_guid" csv:"organization_guid"`
+	OrgName               string    `json:"organization_name" csv:"organization_name"`
+	PeriodStart           time.Time `json:"period_start" csv:"period_start"`
+	PeriodEnd             time.Time `json:"period_end" csv:"period_end"`
+	SpaceGUID             string    `json:"space_guid" csv:"space_guid"`
+	SpaceName             string    `json:"space_name" csv:"space_name"`
+	AppName               string    `json:"app_name" csv:"app_name"`
+	AppGUID               string    `json:"app_guid" csv:"app_guid"`
+	InstanceCount         int       `json:"instance_count" csv:"instance_count"`
+	MemoryInMbPerInstance int       `json:"memory_in_mb_per_instance" csv:"memory_in_mb_per_instance"`
+	DurationInSeconds     int       `json:"duration_in_seconds" csv:"duration_in_seconds"`
+}
+
+// handles report formatting if CSV is specified
+func appReportFormatter(c echo.Context, usageReport *FlattenAppUsage) error {
+	var format = strings.ToLower(c.QueryParam("format"))
+	if format == "csv" {
+		fmt.Println("csv output requested")
+		b, err := csvutil.Marshal(usageReport.Orgs)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+		return c.String(http.StatusOK, string(b))
+	} else {
+		return c.JSON(http.StatusOK, usageReport)
+	}
 }
 
 // AppUsageReportByRange handle a start and end date in the call
@@ -81,7 +98,7 @@ func AppUsageReportByRange(c echo.Context) error {
 	}
 
 	// return report
-	return c.JSON(http.StatusOK, usageReport)
+	return appReportFormatter(c, usageReport)
 }
 
 // AppUsageReportForToday handles the static nature of Apptio's Datalink
@@ -101,7 +118,7 @@ func AppUsageReportForToday(c echo.Context) error {
 	}
 
 	// return report
-	return c.JSON(http.StatusOK, usageReport)
+	return appReportFormatter(c, usageReport)
 }
 
 // AppUsageReportForYesterday handles the static nature of Apptio's Datalink
@@ -122,7 +139,7 @@ func AppUsageReportForYesterday(c echo.Context) error {
 	}
 
 	// return report
-	return c.JSON(http.StatusOK, usageReport)
+	return appReportFormatter(c, usageReport)
 }
 
 // AppUsageReportForMonth handles the app-usage call validating the date
@@ -146,7 +163,7 @@ func AppUsageReportForMonth(c echo.Context) error {
 	}
 
 	// return report
-	return c.JSON(http.StatusOK, usageReport)
+	return appReportFormatter(c, usageReport)
 }
 
 // GenAppUsageReport pulls the entire report together

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"net/url"
 	"strconv"
 	"time"
@@ -184,9 +185,7 @@ func (a *App) Space() (Space, error) {
 	if err != nil {
 		return Space{}, errors.Wrap(err, "Error unmarshalling body")
 	}
-	spaceResource.Entity.Guid = spaceResource.Meta.Guid
-	spaceResource.Entity.c = a.c
-	return spaceResource.Entity, nil
+	return a.c.mergeSpaceResource(spaceResource), nil
 }
 
 // ListAppsByQueryWithLimits queries totalPages app info. When totalPages is
@@ -198,6 +197,50 @@ func (c *Client) ListAppsByQueryWithLimits(query url.Values, totalPages int) ([]
 
 func (c *Client) ListAppsByQuery(query url.Values) ([]App, error) {
 	return c.listApps("/v2/apps?"+query.Encode(), -1)
+}
+
+// GetAppByGuidNoInlineCall will fetch app info including space and orgs information
+// Without using inline-relations-depth=2 call
+func (c *Client) GetAppByGuidNoInlineCall(guid string) (App, error) {
+	var appResource AppResource
+	r := c.NewRequest("GET", "/v2/apps/"+guid)
+	resp, err := c.DoRequest(r)
+	if err != nil {
+		return App{}, errors.Wrap(err, "Error requesting apps")
+	}
+	defer resp.Body.Close()
+	resBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return App{}, errors.Wrap(err, "Error reading app response body")
+	}
+
+	err = json.Unmarshal(resBody, &appResource)
+	if err != nil {
+		return App{}, errors.Wrap(err, "Error unmarshalling app")
+	}
+	app := c.mergeAppResource(appResource)
+
+	// If no Space Information no need to check org.
+	if app.SpaceGuid != "" {
+		//Getting Spaces Resource
+		space, err := app.Space()
+		if err != nil {
+			errors.Wrap(err, "Unable to get the Space for the apps "+app.Name)
+		} else {
+			app.SpaceData.Entity = space
+
+		}
+
+		//Getting orgResource
+		org, err := app.SpaceData.Entity.Org()
+		if err != nil {
+			errors.Wrap(err, "Unable to get the Org for the apps "+app.Name)
+		} else {
+			app.SpaceData.Entity.OrgData.Entity = org
+		}
+	}
+
+	return app, nil
 }
 
 func (c *Client) ListApps() ([]App, error) {
@@ -217,6 +260,7 @@ func (c *Client) listApps(requestUrl string, totalPages int) ([]App, error) {
 		var appResp AppResponse
 		r := c.NewRequest("GET", requestUrl)
 		resp, err := c.DoRequest(r)
+
 		if err != nil {
 			return nil, errors.Wrap(err, "Error requesting apps")
 		}
@@ -230,15 +274,8 @@ func (c *Client) listApps(requestUrl string, totalPages int) ([]App, error) {
 		if err != nil {
 			return nil, errors.Wrap(err, "Error unmarshalling app")
 		}
-
 		for _, app := range appResp.Resources {
-			app.Entity.Guid = app.Meta.Guid
-			app.Entity.CreatedAt = app.Meta.CreatedAt
-			app.Entity.UpdatedAt = app.Meta.UpdatedAt
-			app.Entity.SpaceData.Entity.Guid = app.Entity.SpaceData.Meta.Guid
-			app.Entity.SpaceData.Entity.OrgData.Entity.Guid = app.Entity.SpaceData.Entity.OrgData.Meta.Guid
-			app.Entity.c = c
-			apps = append(apps, app.Entity)
+			apps = append(apps, c.mergeAppResource(app))
 		}
 
 		requestUrl = appResp.NextUrl
@@ -352,11 +389,7 @@ func (c *Client) GetAppByGuid(guid string) (App, error) {
 	if err != nil {
 		return App{}, errors.Wrap(err, "Error unmarshalling app")
 	}
-	appResource.Entity.Guid = appResource.Meta.Guid
-	appResource.Entity.SpaceData.Entity.Guid = appResource.Entity.SpaceData.Meta.Guid
-	appResource.Entity.SpaceData.Entity.OrgData.Entity.Guid = appResource.Entity.SpaceData.Entity.OrgData.Meta.Guid
-	appResource.Entity.c = c
-	return appResource.Entity, nil
+	return c.mergeAppResource(appResource), nil
 }
 
 func (c *Client) AppByGuid(guid string) (App, error) {
@@ -381,4 +414,25 @@ func (c *Client) AppByName(appName, spaceGuid, orgGuid string) (app App, err err
 	}
 	app = apps[0]
 	return
+}
+
+func (c *Client) DeleteApp(guid string) error {
+	resp, err := c.DoRequest(c.NewRequest("DELETE", fmt.Sprintf("/v2/apps/%s", guid)))
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode != http.StatusNoContent {
+		return errors.Wrapf(err, "Error deleting app %s, response code: %d", guid, resp.StatusCode)
+	}
+	return nil
+}
+
+func (c *Client) mergeAppResource(app AppResource) App {
+	app.Entity.Guid = app.Meta.Guid
+	app.Entity.CreatedAt = app.Meta.CreatedAt
+	app.Entity.UpdatedAt = app.Meta.UpdatedAt
+	app.Entity.SpaceData.Entity.Guid = app.Entity.SpaceData.Meta.Guid
+	app.Entity.SpaceData.Entity.OrgData.Entity.Guid = app.Entity.SpaceData.Entity.OrgData.Meta.Guid
+	app.Entity.c = c
+	return app.Entity
 }
