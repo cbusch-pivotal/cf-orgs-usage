@@ -37,7 +37,7 @@ properties:
 - name: author
   type: string
   label: Author
-  value: Ian Zink, Chris Busch, and Kris Mattson
+  value: Ian Zink, Chris Busch, Kris Mattson, Matthew Fischer
 - name: GOPACKAGENAME
   type: string
   label: GO Package Name
