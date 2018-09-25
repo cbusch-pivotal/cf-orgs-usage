@@ -10,7 +10,7 @@ AUDIT_EMAIL="pcf@company.com"
 SYSTEM_DOMAIN="system.pcf.example.com"
 
 # From Elastic Runtime tile -> Credentials tab -> UAA / Admin Client Credentials
-ADMIN_CLIENT_SECRET="
+ADMIN_CLIENT_SECRET=""
 
 # set target environment in which to create users
 uaac target uaa.${SYSTEM_DOMAIN}  --skip-ssl-validation
